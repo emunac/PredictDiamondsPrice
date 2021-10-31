@@ -9,7 +9,8 @@ print(len(df.carat))
 
 class CustomDataset(Dataset):
     def __init__(self,df):
-        self.x = df.iloc[]
+        self.features = df.iloc[]
+        self.prices = df.price
 
 
 
