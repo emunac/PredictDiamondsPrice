@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 import torch
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
+from torch.utils.data.dataset import random_split
 from torch.nn import functional
-
 
 #Learning the syntax
 
@@ -54,6 +54,13 @@ class CustomDataset(Dataset):
 dataset = CustomDataset('Diamonds.csv')
 print("Num Diamonds in Dataset:", len(dataset))
 print("One example from dataset:", dataset[2])
+
+train_size = int(0.8 * len(dataset))
+val_size = len(dataset) - train_size
+train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+
+train_loader = DataLoader(dataset=train_dataset, batch_size=16)
+val_loader = DataLoader(dataset=val_dataset, batch_size=16)
 
 
 
