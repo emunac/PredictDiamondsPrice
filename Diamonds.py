@@ -75,7 +75,7 @@ model = nn.Linear(26, 1)
 print(model.state_dict())
 
 lr = 0.0001
-n_epochs = 100
+n_epochs = 1000
 
 loss_fn = nn.MSELoss()
 
@@ -104,6 +104,19 @@ for epoch in range(n_epochs):
             val_loss = loss_fn(price_val.float(), yhat_val.squeeze())
             val_losses.append(val_loss.detach())
 
+
     print(epoch, "loss_train:", torch.stack(losses).mean(), "loss_val:", torch.stack(val_losses).mean())
 
 print(model.state_dict())
+
+#val_loss on a constant model
+val_losses = []
+with torch.no_grad():
+    for feat_val, price_val in val_loader:
+        #constant of log(mean(price))
+        yhat_val = (3932.8 * torch.ones(len(price_val))).log()
+        val_loss = loss_fn(price_val.float(), yhat_val.squeeze())
+        val_losses.append(val_loss.detach())
+print("val loss constant:", torch.stack(val_losses).mean())
+
+
