@@ -51,13 +51,19 @@ class CustomDataset(Dataset):
         # mean = price.mean()
         # std = price.std()
         # self.price = (price - mean)/std
-        self.price = price.log()
+        self.price = price
 
     def __len__(self):
         return len(self.price)
 
     def __getitem__(self, idx):
         return self.features[idx], self.price[idx]
+
+    def normalize(self):
+        mean = self.price.mean()
+        std = self.price.std()
+        self.price = (self.price - mean)/ std
+        return mean, std
 
 
 dataset = CustomDataset('Diamonds.csv')
@@ -68,55 +74,76 @@ train_size = int(0.8 * len(dataset))
 val_size = len(dataset) - train_size
 train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
 
+#std normalize
+#mean_train, std_train = train_dataset.dataset.normalize()
+
 train_loader = DataLoader(dataset=train_dataset, batch_size=128)
 val_loader = DataLoader(dataset=val_dataset, batch_size=20)
 
-model = nn.Linear(26, 1)
+model = nn.Sequential(nn.Linear(26, 15),
+                      nn.ReLU(),
+                      nn.Linear(15, 1))
 print(model.state_dict())
 
-lr = 0.0001
+lr = 0.01
 n_epochs = 1000
 
-loss_fn = nn.MSELoss()
+loss_fn = nn.L1Loss()
 
-optimizer = optim.SGD(model.parameters(), lr=lr)
+optimizer = optim.Adam(model.parameters(), lr=lr)
 
-for epoch in range(n_epochs):
-    model.train()
+
+for lr in [0.001, 0.01, 0.1]:
     losses = []
-    for feat_batch, price_batch in tqdm(train_loader):
-
-        yhat:torch.Tensor = model(feat_batch.float())
-
-        loss = loss_fn(price_batch.float(), yhat.squeeze())
-        loss:torch.Tensor
-        #print(loss.item())
-        losses.append(loss.detach())
-        loss.backward()
-        optimizer.step()
-        optimizer.zero_grad()
-
-    model.eval()
     val_losses = []
-    with torch.no_grad():
-        for feat_val, price_val in val_loader:
-            yhat_val: torch.Tensor = model(feat_val.float())
-            val_loss = loss_fn(price_val.float(), yhat_val.squeeze())
-            val_losses.append(val_loss.detach())
+    for epoch in range(n_epochs):
+        model.train()
+        losses = []
+        for feat_batch, price_batch in tqdm(train_loader):
+            yhat: torch.Tensor = model(feat_batch.float())
 
+            #price = price_batch.log() # log scaling
 
-    print(epoch, "loss_train:", torch.stack(losses).mean(), "loss_val:", torch.stack(val_losses).mean())
+            loss = loss_fn(price_batch, yhat.squeeze())
+            loss: torch.Tensor
+            # print(loss.item())
+            losses.append(loss.detach())
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
 
-print(model.state_dict())
+        model.eval()
+        val_losses = []
+        with torch.no_grad():
+            for feat_val, price_val in val_loader:
+                yhat_val: torch.Tensor = model(feat_val.float())
+
+                #yhat_val = yhat_val.exp() #log rescaling
+                #yhat_val = yhat_val * std_train + mean_train #std rescaling
+
+                val_loss = loss_fn(price_val.float(), yhat_val.squeeze())
+                val_losses.append(val_loss.detach())
+
+        print(epoch, "lr =", lr, "loss_train:", torch.stack(losses).mean(), "loss_val:", torch.stack(val_losses).mean())
+
+    print(model.state_dict())
+
+    with open("results.json", "a+") as handle:
+        import json
+
+        handle.write("\n")
+
+        json.dump({"features": 26, "num of nodes in hidden layer 1": 15,
+                   "lr": lr, "scale": "no", "Loss_fn": "MAE",
+                   "train_loss": torch.stack(losses).mean().item(),
+                   "val_loss": torch.stack(val_losses).mean().item()}, handle)
 
 #val_loss on a constant model
-val_losses = []
+const_val_losses = []
 with torch.no_grad():
     for feat_val, price_val in val_loader:
         #constant of log(mean(price))
         yhat_val = (3932.8 * torch.ones(len(price_val))).log()
         val_loss = loss_fn(price_val.float(), yhat_val.squeeze())
-        val_losses.append(val_loss.detach())
-print("val loss constant:", torch.stack(val_losses).mean())
-
-
+        const_val_losses.append(val_loss.detach())
+print("val loss constant:", torch.stack(const_val_losses).mean())
