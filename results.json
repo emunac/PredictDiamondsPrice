@@ -1,0 +1,4 @@
+
+{"features": 26, "linear": "yes, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 1948.4720458984375, "val_loss": 1926.60693359375}
+{"features": 26, "linear": "yes, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 970.225341796875, "val_loss": 970.93701171875}
+{"features": 26, "linear": "yes, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 662.2965698242188, "val_loss": 657.3482055664062}
