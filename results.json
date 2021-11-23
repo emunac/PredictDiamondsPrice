@@ -22,3 +22,9 @@
 {"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 315.85784912109375, "val_loss": 313.7367248535156}
 {"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 311.8695373535156, "val_loss": 311.9664306640625}
 {"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 310.80316162109375, "val_loss": 312.9127502441406}
+{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 325.4446105957031, "val_loss": 327.82861328125}
+{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 323.3174743652344, "val_loss": 328.4474792480469}
+{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 321.26776123046875, "val_loss": 330.3862609863281}
+{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 310.5358581542969, "val_loss": 329.9723815917969}
+{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 299.7158203125, "val_loss": 330.4450378417969}
+{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 297.44769287109375, "val_loss": 324.9326477050781}

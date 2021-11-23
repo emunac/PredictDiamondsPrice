@@ -80,13 +80,15 @@ train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
 train_loader = DataLoader(dataset=train_dataset, batch_size=128)
 val_loader = DataLoader(dataset=val_dataset, batch_size=20)
 
-model = nn.Sequential(nn.Linear(26, 15),
+model = nn.Sequential(nn.Linear(26, 18),
                       nn.ReLU(),
-                      nn.Linear(15, 1))
+                      nn.Linear(18, 9),
+                      nn.ReLU(),
+                      nn.Linear(9, 1))
 print(model.state_dict())
 
 lr = 0.01
-n_epochs = 1000
+n_epochs = 2000
 
 loss_fn = nn.L1Loss()
 
@@ -133,7 +135,7 @@ for lr in [0.001, 0.01, 0.1]:
 
         handle.write("\n")
 
-        json.dump({"features": 26, "num of nodes in hidden layer 1": 15,
+        json.dump({"n_epochs": n_epochs, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9,
                    "lr": lr, "scale": "no", "Loss_fn": "MAE",
                    "train_loss": torch.stack(losses).mean().item(),
                    "val_loss": torch.stack(val_losses).mean().item()}, handle)
