@@ -1,30 +1,8 @@
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 2801.639892578125, "val_loss": 2825.89599609375}{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 321.7444152832031, "val_loss": 335.5959167480469}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.0001, "scale": "no", "Loss_fn": "MAE", "train_loss": 332.90972900390625, "val_loss": 347.2320556640625}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 331.55987548828125, "val_loss": 343.1044006347656}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.005, "scale": "no", "Loss_fn": "MAE", "train_loss": 330.557861328125, "val_loss": 339.7892761230469}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 330.1479187011719, "val_loss": 338.4436950683594}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.05, "scale": "no", "Loss_fn": "MAE", "train_loss": 329.76824951171875, "val_loss": 338.3075256347656}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 329.50244140625, "val_loss": 338.1441650390625}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.5, "scale": "no", "Loss_fn": "MAE", "train_loss": 329.3617858886719, "val_loss": 338.04931640625}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.001, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.09492211788892746, "val_loss": 363.7836608886719}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.09278818219900131, "val_loss": 389.8536071777344}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.1, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.09246286004781723, "val_loss": 398.34259033203125}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.001, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.01978803612291813, "val_loss": 91826560.0}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.019381865859031677, "val_loss": 87837456.0}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.1, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.019245214760303497, "val_loss": 79080048.0}
+"This is the result of predicting diamonds price with two hidden layer 26->18->9->1, with 2000 epochs, estimate validation with MAE"
 
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.001, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.02496262826025486, "val_loss": 32816670.0}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.024997388944029808, "val_loss": 32506312.0}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.1, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.025091825053095818, "val_loss": 32631978.0}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.001, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.09570757299661636, "val_loss": 3762.914794921875}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.01, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.09448008239269257, "val_loss": 3924.25}
-{"features": 26, "num of nodes in hidden layer 1": 10, "lr": 0.1, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.09497077018022537, "val_loss": 3831.376953125}
-{"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 315.85784912109375, "val_loss": 313.7367248535156}
-{"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 311.8695373535156, "val_loss": 311.9664306640625}
-{"features": 26, "num of nodes in hidden layer 1": 15, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 310.80316162109375, "val_loss": 312.9127502441406}
-{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 325.4446105957031, "val_loss": 327.82861328125}
-{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 323.3174743652344, "val_loss": 328.4474792480469}
-{"features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 321.26776123046875, "val_loss": 330.3862609863281}
-{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.001, "scale": "no", "Loss_fn": "MAE", "train_loss": 310.5358581542969, "val_loss": 329.9723815917969}
-{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.01, "scale": "no", "Loss_fn": "MAE", "train_loss": 299.7158203125, "val_loss": 330.4450378417969}
-{"n_epochs": 2000, "features": 26, "num of nodes in hidden layer 1": 18, "num of nodes in hidden layer 2": 9, "lr": 0.1, "scale": "no", "Loss_fn": "MAE", "train_loss": 297.44769287109375, "val_loss": 324.9326477050781}
+{"lr": 0.001, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 312.9552917480469, "val_loss": 321.7550354003906}
+{"lr": 0.01, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 307.3642883300781, "val_loss": 322.00982666015625}
+{"lr": 0.1, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 323.16143798828125, "val_loss": 327.031005859375}
+{"lr": 0.001, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.019580615684390068, "val_loss": 317.1557312011719}
+{"lr": 0.01, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.02471034787595272, "val_loss": 429.4405822753906}
+{"lr": 0.1, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.06838908046483994, "val_loss": 640.59619140625}
