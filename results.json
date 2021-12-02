@@ -1,8 +1,26 @@
-"This is the result of predicting diamonds price with two hidden layer 26->18->9->1, with 2000 epochs, estimate validation with MAE"
+"This is the result of predicting diamonds price with two hidden layer 26->18->9->1, with 1000 epochs, estimate validation with MAE"
 
-{"lr": 0.001, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 312.9552917480469, "val_loss": 321.7550354003906}
-{"lr": 0.01, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 307.3642883300781, "val_loss": 322.00982666015625}
-{"lr": 0.1, "sdt": "no", "log": "no", "Loss_fn": "MAE", "train_loss": 323.16143798828125, "val_loss": 327.031005859375}
-{"lr": 0.001, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.019580615684390068, "val_loss": 317.1557312011719}
-{"lr": 0.01, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.02471034787595272, "val_loss": 429.4405822753906}
-{"lr": 0.1, "sdt": "yes", "log": "no", "Loss_fn": "MSE", "train_loss": 0.06838908046483994, "val_loss": 640.59619140625}
+{"lr": 0.01, "scale": "no_scale", "Loss_fn": "MAE", "train_loss": 327.334228515625, "val_loss": 328.72344970703125}
+{"lr": 0.001, "scale": "no_scale", "Loss_fn": "MAE", "train_loss": 311.343505859375, "val_loss": 319.99609375}
+{"lr": 0.0001, "scale": "no_scale", "Loss_fn": "MAE", "train_loss": 390.4316711425781, "val_loss": 392.0855712890625}
+{"lr": 3e-05, "scale": "no_scale", "Loss_fn": "MAE", "train_loss": 458.80291748046875, "val_loss": 453.5598449707031}
+{"lr": 0.01, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.09372448921203613, "val_loss": 356.58502197265625}
+{"lr": 0.001, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.08421240746974945, "val_loss": 325.1541748046875}
+{"lr": 0.0001, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.08932800590991974, "val_loss": 380.06488037109375}
+{"lr": 3e-05, "scale": "log", "Loss_fn": "MAE", "train_loss": 0.0943446084856987, "val_loss": 359.4100646972656}
+{"lr": 0.01, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.08305808901786804, "val_loss": 325.21954345703125}
+{"lr": 0.001, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.07488447427749634, "val_loss": 307.9221496582031}
+{"lr": 0.0001, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.09075077623128891, "val_loss": 367.9458312988281}
+{"lr": 3e-05, "scale": "std", "Loss_fn": "MAE", "train_loss": 0.0969972088932991, "val_loss": 393.7139892578125}
+{"lr": 0.01, "scale": "no_scale", "Loss_fn": "MSE", "train_loss": 380984.40625, "val_loss": 332.06005859375}
+{"lr": 0.001, "scale": "no_scale", "Loss_fn": "MSE", "train_loss": 319087.5625, "val_loss": 310.65167236328125}
+{"lr": 0.0001, "scale": "no_scale", "Loss_fn": "MSE", "train_loss": 740856.375, "val_loss": 413.9947814941406}
+{"lr": 3e-05, "scale": "no_scale", "Loss_fn": "MSE", "train_loss": 1024138.8125, "val_loss": 473.56121826171875}
+{"lr": 0.01, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.015575529076159, "val_loss": 355.4109802246094}
+{"lr": 0.001, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.012242249213159084, "val_loss": 331.8518371582031}
+{"lr": 0.0001, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.013213996775448322, "val_loss": 341.30926513671875}
+{"lr": 3e-05, "scale": "log", "Loss_fn": "MSE", "train_loss": 0.015652814880013466, "val_loss": 352.5957336425781}
+{"lr": 0.01, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.022286301478743553, "val_loss": 371.5991516113281}
+{"lr": 0.001, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.019726930186152458, "val_loss": 313.72027587890625}
+{"lr": 0.0001, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.022102003917098045, "val_loss": 346.5010681152344}
+{"lr": 3e-05, "scale": "std", "Loss_fn": "MSE", "train_loss": 0.02567457966506481, "val_loss": 383.494873046875}

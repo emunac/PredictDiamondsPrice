@@ -3,10 +3,18 @@ import torch
 from torch import nn as nn
 import torch.optim as optim
 from torch.utils.data import Dataset, DataLoader
-from torch.utils.data.dataset import random_split
+from torch.utils.data.dataset import random_split, Subset
 from torch.nn import functional
 from tqdm import tqdm
 
+#sclaing
+LOG = "log"
+STD = "std"
+NO_SCALE = "no_scale"
+
+#loss_fn
+MSE = "MSE"
+MAE = "MAE"
 
 #Learning the syntax
 
@@ -55,11 +63,15 @@ class CustomDataset(Dataset):
     def __getitem__(self, idx):
         return self.features[idx], self.price[idx]
 
-    def normalize(self):
-        mean = self.price.mean()
-        std = self.price.std()
-        self.price = (self.price - mean)/ std
+    #stndart normalize for the price at specific indices
+    def normalize(self, indices):
+        mean = self.price[indices].mean()
+        std = self.price[indices].std()
+        self.price[indices] = (self.price[indices] - mean) / std
         return mean, std
+
+    def denormalize(self, indices, mean, std):
+        self.price[indices] = (self.price[indices] * std) + mean
 
 
 dataset = CustomDataset('Diamonds.csv')
@@ -68,73 +80,83 @@ print("One example from dataset:", dataset[2])
 
 train_size = int(0.8 * len(dataset))
 val_size = len(dataset) - train_size
-train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
+train_dataset, val_dataset = random_split(dataset, [train_size, val_size])#return Subset
+# train_dataset = CustomSubset(dataset, train_subset.indices)#exchange to CustomSubset
 
-#std normalize
-mean_train, std_train = train_dataset.dataset.normalize()
+loss_val_fn = nn.L1Loss()
+n_epochs = 1000
 
-train_loader = DataLoader(dataset=train_dataset, batch_size=128)
-val_loader = DataLoader(dataset=val_dataset, batch_size=20)
+for loss_fn_options in [MAE, MSE]:
+    if loss_fn_options is MAE:
+        loss_fn = nn.L1Loss()
+    else:
+        loss_fn = nn.MSELoss()
+    for scale in [NO_SCALE, LOG, STD]:
+        if scale is STD:
+            # std normalize
+            mean_train, std_train = train_dataset.dataset.normalize(train_dataset.indices)
 
+        train_loader = DataLoader(dataset=train_dataset, batch_size=128)
+        val_loader = DataLoader(dataset=val_dataset, batch_size=20)
 
-for lr in [0.001, 0.01, 0.1]:
+        for lr in [0.01, 0.001, 0.0001, 0.00003]:
+            model = nn.Sequential(nn.Linear(26, 18),
+                                  nn.ReLU(),
+                                  nn.Linear(18, 9),
+                                  nn.ReLU(),
+                                  nn.Linear(9, 1))
 
-    model = nn.Sequential(nn.Linear(26, 18),
-                          nn.ReLU(),
-                          nn.Linear(18, 9),
-                          nn.ReLU(),
-                          nn.Linear(9, 1))
+            optimizer = optim.Adam(model.parameters(), lr=lr)
+            losses = []
+            val_losses = []
 
-    n_epochs = 1000
-    loss_fn = nn.L1Loss()
-    loss_val_fn = nn.L1Loss()
-    optimizer = optim.Adam(model.parameters(), lr=lr)
-    losses = []
-    val_losses = []
+            for epoch in range(n_epochs):
+                model.train()
+                losses = []
+                for feat_batch, price_batch in tqdm(train_loader):
+                    yhat: torch.Tensor = model(feat_batch.float())
 
-    for epoch in range(n_epochs):
-        model.train()
-        losses = []
-        for feat_batch, price_batch in tqdm(train_loader):
-            yhat: torch.Tensor = model(feat_batch.float())
+                    if scale is LOG:
+                        price_batch = price_batch.log()#log scaling
+                    loss = loss_fn(price_batch, yhat.squeeze())
+                    loss: torch.Tensor
+                    # print(loss.item())
+                    losses.append(loss.detach())
+                    loss.backward()
+                    optimizer.step()
+                    optimizer.zero_grad()
 
-            #price = price_batch.log() # log scaling
+                model.eval()
+                val_losses = []
+                with torch.no_grad():
+                    for feat_val, price_val in val_loader:
+                        yhat_val: torch.Tensor = model(feat_val.float())
 
-            loss = loss_fn(price_batch, yhat.squeeze())
-            loss: torch.Tensor
-            # print(loss.item())
-            losses.append(loss.detach())
-            loss.backward()
-            optimizer.step()
-            optimizer.zero_grad()
+                        if scale is LOG:
+                            yhat_val = yhat_val.exp() #log rescaling
+                        elif scale is STD:
+                            yhat_val = (yhat_val * std_train) + mean_train  # std descaling
 
-        model.eval()
-        val_losses = []
-        with torch.no_grad():
-            for feat_val, price_val in val_loader:
-                yhat_val: torch.Tensor = model(feat_val.float())
+                        val_loss = loss_val_fn(price_val.float(), yhat_val.squeeze())
+                        val_losses.append(val_loss.detach())
 
-                #yhat_val = yhat_val.exp() #log rescaling
-                price_val = (price_val * std_train) + mean_train #std reascaling
-                yhat_val = (yhat_val * std_train) + mean_train #std rescaling
+                print(epoch, "lr =", lr, "loss_train:", torch.stack(losses).mean(), "loss_val:",
+                      torch.stack(val_losses).mean())
 
-                val_loss = loss_val_fn(price_val.float(), yhat_val.squeeze())
-                val_losses.append(val_loss.detach())
+            print(model.state_dict())
 
-        print(epoch, "lr =", lr, "loss_train:", torch.stack(losses).mean(), "loss_val:", torch.stack(val_losses).mean())
+            with open("results.json", "a+") as handle:
+                import json
 
-    print(model.state_dict())
+                # json.dump("\nThis is the result of predicting diamonds price with two hidden layer "
+                #         "26->18->9->1, with 2000 epochs, estimate validation with MAE\n\n", handle)
 
-    with open("results.json", "a+") as handle:
-        import json
-
-        #json.dump("\nThis is the result of predicting diamonds price with two hidden layer "
-        #         "26->18->9->1, with 2000 epochs, estimate validation with MAE\n\n", handle)
-
-        handle.write("\n")
-        json.dump({"lr": lr, "sdt": "yes", "log": "no", "Loss_fn": "MAE",
-                   "train_loss": torch.stack(losses).mean().item(),
-                   "val_loss": torch.stack(val_losses).mean().item()}, handle)
+                handle.write("\n")
+                json.dump({"lr": lr, "scale": scale, "Loss_fn": loss_fn_options,
+                           "train_loss": torch.stack(losses).mean().item(),
+                           "val_loss": torch.stack(val_losses).mean().item()}, handle)
+        if scale is STD:
+            train_dataset.dataset.denormalize(train_dataset.indices, mean_train, std_train)
 
 #val_loss on a constant model
 const_val_losses = []
