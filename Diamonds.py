@@ -100,11 +100,14 @@ for loss_fn_options in [MAE, MSE]:
         val_loader = DataLoader(dataset=val_dataset, batch_size=20)
 
         for lr in [0.01, 0.001, 0.0001, 0.00003]:
-            model = nn.Sequential(nn.Linear(26, 18),
+
+            model = nn.Sequential(nn.Linear(26, 20),
                                   nn.ReLU(),
-                                  nn.Linear(18, 9),
+                                  nn.Linear(20, 14),
                                   nn.ReLU(),
-                                  nn.Linear(9, 1))
+                                  nn.Linear(14, 7),
+                                  nn.ReLU(),
+                                  nn.Linear(7, 1))
 
             optimizer = optim.Adam(model.parameters(), lr=lr)
             losses = []
